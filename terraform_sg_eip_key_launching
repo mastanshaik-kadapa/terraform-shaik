@@ -1,0 +1,54 @@
+provider "aws" {
+  region     = "ap-south-1"
+  access_key = "AKIAVNWPCFBTVEVCOHXH"
+  secret_key = "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"
+}
+
+resource "aws_instance" "web" {
+  ami           = "ami-079b5e5b3971bd10d"
+  instance_type = "t2.micro"
+  #vpc_security_group_ids = [aws_security_group.clouderasg.id]
+  key_name = "devops"
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+
+resource "aws_eip" "lb" {
+  instance = aws_instance.web.id
+  vpc      = true
+}
+
+/*
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
+
+resource "aws_security_group" "clouderasg" {
+  name        = "clouderasg"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = aws_default_vpc.default.id
+
+  ingress {
+    description      = "TLS from VPC"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "clouderasg"
+  }
+}
+*/
