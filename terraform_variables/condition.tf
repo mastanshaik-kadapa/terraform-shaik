@@ -1,7 +1,7 @@
 provider "aws" {
   region     = "ap-south-1"
-  access_key = "AKIAVNWPCFBTUZDVSLKY"
-  secret_key = "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"
+  access_key = ""
+  secret_key = ""
 }
 
 variable "image" {
